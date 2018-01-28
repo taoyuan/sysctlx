@@ -1,6 +1,6 @@
 'use strict';
 
-const execa = require('execa');
+const {exec} = require('child-process-promise');
 
 const ctl = module.exports = {
 	systemctl,
@@ -126,12 +126,6 @@ async function isActive(serviceName) {
 }
 
 async function systemctl(...args) {
-	const result = await execa('systemctl', args);
-	if (result.stdout) {
-		return result.stdout;
-	}
-	if (result.stderr) {
-		throw new Error(result.stderr);
-	}
-	return result;
+	const result = await exec(['systemctl', ...args].join(' '));
+	return result.stdout || result.stderr;
 }
