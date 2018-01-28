@@ -1,4 +1,4 @@
-# systemctlx [![Build Status](https://travis-ci.org/taoyuan/systemctlx.svg?branch=master)](https://travis-ci.org/taoyuan/systemctlx)
+# sysctlx [![Build Status](https://travis-ci.org/taoyuan/sysctlx.svg?branch=master)](https://travis-ci.org/taoyuan/sysctlx)
 
 > A node library to manipulate services with systemctl
 
@@ -6,7 +6,7 @@
 ## Install
 
 ```
-$ npm install systemctlx
+$ npm install sysctlx
 ```
 
 ## Usage
