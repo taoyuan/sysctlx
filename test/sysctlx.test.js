@@ -32,7 +32,7 @@ describe('sysctlx', () => {
 				name: 'create_ap',
 				description: 'Create AP Service',
 				loaded: true,
-				path: '/usr/lib/systemd/system/create_ap.service',
+				file: '/usr/lib/systemd/system/create_ap.service',
 				startup: false,
 				props: {
 					'vendor preset': 'enabled'
@@ -52,7 +52,7 @@ describe('sysctlx', () => {
 				name: 'create_ap',
 				description: 'Create AP Service',
 				loaded: true,
-				path: '/usr/lib/systemd/system/create_ap.service',
+				file: '/usr/lib/systemd/system/create_ap.service',
 				startup: false,
 				props: {
 					'vendor preset': 'enabled'
@@ -72,7 +72,7 @@ describe('sysctlx', () => {
 				name: 'create_ap',
 				description: 'Create AP Service',
 				loaded: true,
-				path: '/usr/lib/systemd/system/create_ap.service',
+				file: '/usr/lib/systemd/system/create_ap.service',
 				startup: true,
 				props: {
 					'vendor preset': 'enabled'
@@ -93,7 +93,7 @@ describe('sysctlx', () => {
 				name: 'create_ap',
 				description: 'Create AP Service',
 				loaded: true,
-				path: '/usr/lib/systemd/system/create_ap.service',
+				file: '/usr/lib/systemd/system/create_ap.service',
 				startup: false,
 				props: {
 					'vendor preset': 'enabled'

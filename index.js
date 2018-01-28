@@ -47,7 +47,7 @@ function parse_status(s) {
 			const props = match[1];
 			const parts = props.split(';').map(s => s.trim());
 			if (parts.length >= 1) {
-				parsed.path = parts[0];
+				parsed.file = parts[0];
 			}
 			if (parts.length >= 2) {
 				parsed.startup = parts[1] === 'enabled';
