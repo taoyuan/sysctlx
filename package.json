@@ -1,0 +1,31 @@
+{
+	"name": "systemctlx",
+	"version": "0.0.1",
+	"description": "A node library to manipulate services with systemctl",
+	"license": "MIT",
+	"repository": "taoyuan/systemctlx",
+	"author": {
+		"name": "ty",
+		"email": "towyuan@outlook.com",
+		"url": "github.com/taoyuan"
+	},
+	"engines": {
+		"node": ">=8"
+	},
+	"scripts": {
+		"test": "xo && ava"
+	},
+	"files": [
+		"index.js"
+	],
+	"keywords": [
+		"systemctl",
+		"systemd",
+		"service"
+	],
+	"dependencies": {
+		"execa": "^0.9.0"
+	},
+	"devDependencies": {
+	}
+}
