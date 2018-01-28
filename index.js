@@ -1,7 +1,6 @@
 'use strict';
 
 const execa = require('execa');
-const inflection = require('inflection');
 
 const ctl = module.exports = {
 	systemctl,

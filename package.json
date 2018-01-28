@@ -1,6 +1,6 @@
 {
 	"name": "sysctlx",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A node library to manipulate services with systemctl",
 	"license": "MIT",
 	"repository": "taoyuan/sysctlx",
@@ -24,8 +24,7 @@
 		"service"
 	],
 	"dependencies": {
-		"execa": "^0.9.0",
-		"inflection": "^1.12.0"
+		"execa": "^0.9.0"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.1.2",
