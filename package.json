@@ -1,6 +1,6 @@
 {
 	"name": "sysctlx",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A node library to manipulate services with systemctl",
 	"license": "MIT",
 	"repository": "taoyuan/sysctlx",
