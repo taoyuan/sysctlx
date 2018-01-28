@@ -126,6 +126,10 @@ async function isActive(serviceName) {
 }
 
 async function systemctl(...args) {
-	const result = await exec(['systemctl', ...args].join(' '));
-	return result.stdout || result.stderr;
+	try {
+		const result = await exec(['systemctl', ...args].join(' '));
+		return result.stdout || result.stderr;
+	} catch (e) {
+		return e.stdout || e.stderr;
+	}
 }
