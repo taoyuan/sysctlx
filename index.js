@@ -15,24 +15,24 @@ const ctl = module.exports = {
 	reload
 };
 
-function parse_status(s) {
+function parse_status(raw) {
 	const parsed = {};
 	let match;
 	let line;
 
-	if (s.match(/could not be found/i)) {
+	if (raw.match(/could not be found/i)) {
 		return false;
 	}
 
-	if (match = s.match(/([^ ]+)\.service/)) {
+	if (match = raw.match(/([^ ]+)\.service/)) {
 		parsed.name = match[1];
 	}
 
-	if (match = s.match(/\.service - (.+)/)) {
+	if (match = raw.match(/\.service - (.+)/)) {
 		parsed.description = match[1];
 	}
 
-	if (match = s.match(/Loaded:[ ]+(.+)/)) {
+	if (match = raw.match(/Loaded:[ ]+(.+)/)) {
 		line = match[1];
 
 		if (match = line.match(/([^ ]+)/)) {
@@ -62,7 +62,7 @@ function parse_status(s) {
 		}
 	}
 
-	if (match = s.match(/Active: (.+)/)) {
+	if (match = raw.match(/Active: (.+)/)) {
 		line = match[1];
 
 		if (match = line.match(/([^ ]+)/)) {
@@ -74,9 +74,11 @@ function parse_status(s) {
 		}
 	}
 
-	if (match = s.match(/Main PID: (\d+)/)) {
+	if (match = raw.match(/Main PID: (\d+)/)) {
 		parsed.pid = match[1];
 	}
+
+	parsed.raw = raw;
 
 	return parsed;
 }

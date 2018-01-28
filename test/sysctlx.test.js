@@ -37,7 +37,8 @@ describe('sysctlx', () => {
 				props: {
 					'vendor preset': 'enabled'
 				},
-				active: false
+				active: false,
+				raw: m.STATUS_INACTIVE,
 			});
 		});
 
@@ -57,7 +58,8 @@ describe('sysctlx', () => {
 				props: {
 					'vendor preset': 'enabled'
 				},
-				active: false
+				active: false,
+				raw: m.STATUS_DISABLED,
 			});
 		});
 
@@ -77,7 +79,8 @@ describe('sysctlx', () => {
 				props: {
 					'vendor preset': 'enabled'
 				},
-				active: false
+				active: false,
+				raw: m.STATUS_ENABLED
 			});
 		});
 
@@ -100,7 +103,8 @@ describe('sysctlx', () => {
 				},
 				active: true,
 				started: new Date('2018-01-28T09:37:11.000Z'),
-				pid: '29383'
+				pid: '29383',
+				raw: m.STATUS_ACTIVE
 			});
 		});
 
@@ -115,7 +119,8 @@ describe('sysctlx', () => {
 				name: 'test',
 				loaded: false,
 				error: 'Invalid argument',
-				active: false
+				active: false,
+				raw: m.STATUS_ERROR
 			});
 		});
 	});
