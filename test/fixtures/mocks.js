@@ -46,6 +46,12 @@ Jan 28 09:37:12 bittpi create_ap[29383]: Using interface wlan0 with hwaddr b8:27
 Jan 28 09:37:13 bittpi create_ap[29383]: wlan0: interface state UNINITIALIZED->ENABLED
 Jan 28 09:37:13 bittpi create_ap[29383]: wlan0: AP-ENABLED`;
 
+exports.STATUS_ACTIVATING = `● create_ap.service - Create AP Service
+   Loaded: loaded (/usr/lib/systemd/system/create_ap.service; disabled; vendor preset: enabled)
+   Active: activating (auto-restart) (Result: exit-code) since Mon 2018-01-29 10:01:46 UTC; 3s ago
+  Process: 25982 ExecStart=/usr/bin/create_ap --config /etc/create_ap.conf (code=exited, status=1/FAILURE)
+ Main PID: 25982 (code=exited, status=1/FAILURE)`;
+
 exports.STATUS_ERROR = `● test.service
    Loaded: error (Reason: Invalid argument)
    Active: inactive (dead)

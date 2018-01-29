@@ -4,6 +4,8 @@ const {exec} = require('child-process-promise');
 
 const ctl = module.exports = {
 	systemctl,
+	checkActive,
+	checkEnabled,
 	isActive,
 	isEnabled,
 	status,
@@ -50,7 +52,7 @@ function parse_status(raw) {
 				parsed.file = parts[0];
 			}
 			if (parts.length >= 2) {
-				parsed.startup = parts[1] === 'enabled';
+				parsed.startup = parts[1];
 			}
 			if (parts.length >= 3) {
 				for (let i = 2; i < parts.length; i++) {
@@ -66,7 +68,7 @@ function parse_status(raw) {
 		line = match[1];
 
 		if (match = line.match(/([^ ]+)/)) {
-			parsed.active = match[1] === 'active';
+			parsed.active = match[1];
 		}
 
 		if (match = line.match(/since ([\w -:]+)/)) {
@@ -117,13 +119,25 @@ async function reload() {
 	return await ctl.systemctl('daemon-reload');
 }
 
-async function isEnabled(serviceName) {
+async function checkEnabled(serviceName) {
 	const result = await ctl.systemctl('is-enabled', serviceName);
+	if (/No such file or directory/.test(result)) {
+		return 'notfound';
+	}
+	return result;
+}
+
+async function checkActive(serviceName) {
+	return await ctl.systemctl('is-active', serviceName);
+}
+
+async function isEnabled(serviceName) {
+	const result = await checkEnabled(serviceName);
 	return Boolean(result.match(/^enabled/));
 }
 
 async function isActive(serviceName) {
-	const result = await ctl.systemctl('is-active', serviceName);
+	const result = await checkActive(serviceName);
 	return Boolean(result.match(/^active/));
 }
 

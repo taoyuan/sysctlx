@@ -33,11 +33,11 @@ describe('sysctlx', () => {
 				description: 'Create AP Service',
 				loaded: true,
 				file: '/usr/lib/systemd/system/create_ap.service',
-				startup: false,
+				startup: 'disabled',
 				props: {
 					'vendor preset': 'enabled'
 				},
-				active: false,
+				active: 'inactive',
 				raw: m.STATUS_INACTIVE,
 			});
 		});
@@ -54,11 +54,11 @@ describe('sysctlx', () => {
 				description: 'Create AP Service',
 				loaded: true,
 				file: '/usr/lib/systemd/system/create_ap.service',
-				startup: false,
+				startup: 'disabled',
 				props: {
 					'vendor preset': 'enabled'
 				},
-				active: false,
+				active: 'inactive',
 				raw: m.STATUS_DISABLED,
 			});
 		});
@@ -75,11 +75,11 @@ describe('sysctlx', () => {
 				description: 'Create AP Service',
 				loaded: true,
 				file: '/usr/lib/systemd/system/create_ap.service',
-				startup: true,
+				startup: 'enabled',
 				props: {
 					'vendor preset': 'enabled'
 				},
-				active: false,
+				active: 'inactive',
 				raw: m.STATUS_ENABLED
 			});
 		});
@@ -97,14 +97,35 @@ describe('sysctlx', () => {
 				description: 'Create AP Service',
 				loaded: true,
 				file: '/usr/lib/systemd/system/create_ap.service',
-				startup: false,
+				startup: 'disabled',
 				props: {
 					'vendor preset': 'enabled'
 				},
-				active: true,
+				active: 'active',
 				started: new Date('2018-01-28T09:37:11.000Z'),
 				pid: '29383',
 				raw: m.STATUS_ACTIVE
+			});
+		});
+
+		it('should parse activating status', async () => {
+			sinon.stub(c, 'systemctl').callsFake(function (...args) {
+				assert.sameDeepMembers(args, ['status', 'create_ap']);
+				return m.STATUS_ACTIVATING;
+			});
+
+			const status = await c.status('create_ap');
+			assert.deepEqual(status, {
+				name: 'create_ap',
+				description: 'Create AP Service',
+				loaded: true,
+				file: '/usr/lib/systemd/system/create_ap.service',
+				startup: 'disabled',
+				props: {'vendor preset': 'enabled'},
+				active: 'activating',
+				started: new Date('2018-01-29T10:01:46.000Z'),
+				pid: '25982',
+				raw: m.STATUS_ACTIVATING
 			});
 		});
 
@@ -119,9 +140,31 @@ describe('sysctlx', () => {
 				name: 'test',
 				loaded: false,
 				error: 'Invalid argument',
-				active: false,
+				active: 'inactive',
 				raw: m.STATUS_ERROR
 			});
+		});
+	});
+
+	describe('checkActive', () => {
+		it('should check active', async () => {
+			sinon.stub(c, 'systemctl').callsFake(function (...args) {
+				assert.sameDeepMembers(args, ['is-active', 'create_ap']);
+				return 'active';
+			});
+
+			const active = await c.checkActive('create_ap');
+			assert.equal(active, 'active');
+		});
+
+		it('should check inactive', async () => {
+			sinon.stub(c, 'systemctl').callsFake(function (...args) {
+				assert.sameDeepMembers(args, ['is-active', 'create_ap']);
+				return 'inactive';
+			});
+
+			const active = await c.checkActive('create_ap');
+			assert.equal(active, 'inactive');
 		});
 	});
 
@@ -144,6 +187,38 @@ describe('sysctlx', () => {
 
 			const active = await c.isActive('create_ap');
 			assert.equal(active, false);
+		});
+	});
+
+	describe('checkEnabled', () => {
+		it('should check enabled', async () => {
+			sinon.stub(c, 'systemctl').callsFake(function (...args) {
+				assert.sameDeepMembers(args, ['is-enabled', 'create_ap']);
+				return 'enabled';
+			});
+
+			const enabled = await c.checkEnabled('create_ap');
+			assert.equal(enabled, 'enabled');
+		});
+
+		it('should check not found', async () => {
+			sinon.stub(c, 'systemctl').callsFake(function (...args) {
+				assert.sameDeepMembers(args, ['is-enabled', 'create_ap']);
+				return 'Failed to get unit file state for test.service: No such file or directory';
+			});
+
+			const enabled = await c.checkEnabled('create_ap');
+			assert.equal(enabled, 'notfound');
+		});
+
+		it('should check static', async () => {
+			sinon.stub(c, 'systemctl').callsFake(function (...args) {
+				assert.sameDeepMembers(args, ['is-enabled', 'create_ap']);
+				return 'static';
+			});
+
+			const enabled = await c.checkEnabled('create_ap');
+			assert.equal(enabled, 'static');
 		});
 	});
 
